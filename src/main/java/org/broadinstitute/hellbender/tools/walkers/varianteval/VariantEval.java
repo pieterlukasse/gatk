@@ -140,7 +140,7 @@ public class VariantEval extends MultiVariantWalker {
     /**
      * The variant file(s) to compare against.
      */
-    @Argument(fullName="comp", shortName = "comp", doc="Input comparison file(s)", optional=true)
+    @Argument(fullName = StandardArgumentDefinitions.COMPARISON_LONG_NAME, shortName = StandardArgumentDefinitions.COMPARISON_SHORT_NAME, doc="Input comparison file(s)", optional=true)
     public List<FeatureInput<VariantContext>> compsProvided = new ArrayList<>();
     private List<FeatureInput<VariantContext>> comps = new ArrayList<>();
 
@@ -313,7 +313,7 @@ public class VariantEval extends MultiVariantWalker {
         sampleDB = initializeSampleDB();
 
         comps.addAll(compsProvided);
-        compsProvided.forEach(x -> inputToNameMap.put(x, x.hasUserSuppliedName() ? x.getName() : "comp"));
+        compsProvided.forEach(x -> inputToNameMap.put(x, x.hasUserSuppliedName() ? x.getName() : StandardArgumentDefinitions.COMPARISON_LONG_NAME));
         if ( dbsnp.dbsnp != null ) {
             comps.add(dbsnp.dbsnp);
             inputToNameMap.put(dbsnp.dbsnp, "dbsnp");
