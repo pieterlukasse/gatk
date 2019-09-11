@@ -14,7 +14,6 @@ import org.broadinstitute.hellbender.utils.Histogram;
 import org.broadinstitute.hellbender.utils.MannWhitneyU;
 import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.genotyper.AlleleLikelihoods;
-import org.broadinstitute.hellbender.utils.pileup.PileupElement;
 import org.broadinstitute.hellbender.utils.read.GATKRead;
 
 import java.util.*;
@@ -43,10 +42,7 @@ public abstract class AS_RankSumTest extends RankSumTest implements ReducibleAnn
         final int refLoc = vc.getStart();
 
         if( likelihoods != null) {
-            // Default to using the likelihoods to calculate the rank sum
-            if (likelihoods.hasFilledLikelihoods()) {
-                fillQualsFromLikelihood(vc, likelihoods, refQuals, altQuals, refLoc);
-            }
+            fillQualsFromLikelihood(vc, likelihoods, refQuals, altQuals, refLoc);
         }
 
         if ( refQuals.isEmpty() && altQuals.isEmpty() ) {
@@ -81,7 +77,7 @@ public abstract class AS_RankSumTest extends RankSumTest implements ReducibleAnn
     public Map<String, Object> annotateRawData(final ReferenceContext ref,
                                                final VariantContext vc,
                                                final AlleleLikelihoods<GATKRead, Allele> likelihoods ) {
-        if ( likelihoods == null || !likelihoods.hasFilledLikelihoods()) {
+        if ( likelihoods == null) {
             return Collections.emptyMap();
         }
 
@@ -350,9 +346,4 @@ public abstract class AS_RankSumTest extends RankSumTest implements ReducibleAnn
         return h.toString();
     }
 
-    @Override
-    // Unnecessary for this implementation of Annotate
-    protected final OptionalDouble getElementForPileupElement(PileupElement p, int refLoc) {
-        return null;
-    }
 }
