@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class EvoquerIntegrationTest extends CommandLineProgramTest {
 
-    @Test
+    @Test(groups = "cloud")
     public void test3ExomesWithGnarlyGenotyper() throws IOException {
         final String projectID = "broad-dsp-spec-ops";
         final String datasetMapString = "chr20   joint_genotyping_chr20_integration_test  pet_without_gq60_ir_c_sam_st vet";
@@ -94,7 +94,7 @@ public class EvoquerIntegrationTest extends CommandLineProgramTest {
         }
     }
 
-    @Test
+    @Test(groups = "cloud")
     public void multiAllelicSite() throws IOException {
         final String projectID = "broad-dsp-spec-ops";
         final String datasetMapString = "chr20   joint_genotyping_chr20_integration_test  pet_without_gq60_ir_c_sam_st vet";
@@ -160,7 +160,7 @@ public class EvoquerIntegrationTest extends CommandLineProgramTest {
         Assert.assertEquals(g92.getAD(), new int[]{ 36, 0, 10 });
     }
 
-    @Test
+    @Test(groups = "cloud")
     public void spanningDeletion() throws IOException {
         final String projectID = "broad-dsp-spec-ops";
         final String datasetMapString = "chr20   joint_genotyping_chr20_integration_test  pet_without_gq60_ir_c_sam_st vet";
