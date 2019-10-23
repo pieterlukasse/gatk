@@ -20,6 +20,7 @@ import org.broadinstitute.hellbender.utils.tsv.TableColumnCollection;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -88,7 +89,7 @@ public final class SimpleCountCollection extends AbstractSampleLocatableCollecti
      * @param intervalSubset    if {@code null} or empty, all counts will be returned
      */
     public static SimpleCountCollection readSubset(final File file,
-                                                   final List<SimpleInterval> intervalSubset) {
+                                                   final Set<SimpleInterval> intervalSubset) {
         IOUtils.canReadFile(file);
         final SimpleCountCollection simpleCounts = IOUtils.isHDF5File(file.toPath())
                 ? readHDF5(new HDF5File(file))

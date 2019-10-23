@@ -386,9 +386,9 @@ public final class GermlineCNVCaller extends CommandLineProgram {
         logger.info("Validating and aggregating data from input read-count files...");
         final int numSamples = inputReadCountPaths.size();
         final List<File> intervalSubsetReadCountFiles = new ArrayList<>(numSamples);
-        final Set<SimpleInterval> intervalSubset = new HashSet<>(specifiedIntervals.getRecords());
+        final Set<SimpleInterval> intervalSubset = new HashSet<>(specifiedIntervals.getRecords());                       //for subsetting local files
         final List<SimpleInterval> mergedIntervalSubset = IntervalUtils.getIntervalsWithFlanks(
-                specifiedIntervals.getRecords(), 0, specifiedIntervals.getMetadata().getSequenceDictionary());
+                specifiedIntervals.getRecords(), 0, specifiedIntervals.getMetadata().getSequenceDictionary());  //for subsetting GCS files
 
         final ListIterator<String> inputReadCountPathsIterator = inputReadCountPaths.listIterator();
         while (inputReadCountPathsIterator.hasNext()) {
@@ -399,7 +399,7 @@ public final class GermlineCNVCaller extends CommandLineProgram {
 
             final SimpleCountCollection subsetReadCounts = BucketUtils.isCloudStorageUrl(inputReadCountPath)
                     ? SimpleCountCollection.readSubset(inputReadCountPath, mergedIntervalSubset)
-                    : SimpleCountCollection.readSubset(new File(inputReadCountPath), mergedIntervalSubset);
+                    : SimpleCountCollection.readSubset(new File(inputReadCountPath), intervalSubset);
 
             if (!CopyNumberArgumentValidationUtils.isSameDictionary(
                     subsetReadCounts.getMetadata().getSequenceDictionary(),
