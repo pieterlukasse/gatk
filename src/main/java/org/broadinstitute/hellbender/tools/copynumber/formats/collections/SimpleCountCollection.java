@@ -10,6 +10,7 @@ import org.broadinstitute.hellbender.tools.copynumber.formats.metadata.Metadata;
 import org.broadinstitute.hellbender.tools.copynumber.formats.metadata.MetadataUtils;
 import org.broadinstitute.hellbender.tools.copynumber.formats.metadata.SampleLocatableMetadata;
 import org.broadinstitute.hellbender.tools.copynumber.formats.records.SimpleCount;
+import org.broadinstitute.hellbender.utils.IntervalUtils;
 import org.broadinstitute.hellbender.utils.SimpleInterval;
 import org.broadinstitute.hellbender.utils.Utils;
 import org.broadinstitute.hellbender.utils.config.ConfigFactory;
@@ -85,7 +86,8 @@ public final class SimpleCountCollection extends AbstractSampleLocatableCollecti
      * The list may contain intervals that do not coincide with any count intervals.
      * Unlike {@link #readSubset(String, List)}, this method first reads and constructs a {@link SimpleCountCollection}
      * using the entire file, and then creates and returns a second {@link SimpleCountCollection} containing only the
-     * requested subset.
+     * requested subset.  This method also does not subset count intervals that overlap but do not strictly coincide
+     * with intervals in the given list.
      * @param intervalSubset    if {@code null} or empty, all counts will be returned
      */
     public static SimpleCountCollection readSubset(final File file,
@@ -131,8 +133,11 @@ public final class SimpleCountCollection extends AbstractSampleLocatableCollecti
     }
 
     /**
-     * From a Google Cloud Storage URL, subset only the counts with intervals coinciding with intervals from a given list.
-     * The list may contain intervals that do not coincide with any count intervals.
+     * From a Google Cloud Storage URL, subset only the counts with intervals overlapping with intervals from a given list.
+     * The given list may contain intervals that do not overlap with any count intervals.
+     * Unlike {@link #readSubset(File, Set)}, this method checks for overlaps, rather than requiring the intervals
+     * to be strictly coincident.  Calling code can use {@link IntervalUtils#getIntervalsWithFlanks} to create a merged
+     * list of the original intervals desired to be strictly coincident; this merged list can then be used with this method.
      * @param intervalSubset    if {@code null} or empty, all counts will be returned
      */
     public static SimpleCountCollection readSubset(final String path,
