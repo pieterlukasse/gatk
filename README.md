@@ -1,3 +1,6 @@
+:warning: This is a patched version of 4.1.4.1 release, which includes a patch to include the fix at https://github.com/broadinstitute/gatk/pull/6327
+
+
 [![Build Status](https://travis-ci.com/broadinstitute/gatk.svg?branch=master)](https://travis-ci.com/broadinstitute/gatk)
 [![Maven Central](https://img.shields.io/maven-central/v/org.broadinstitute/gatk.svg)](https://maven-badges.herokuapp.com/maven-central/org.broadinstitute/gatk)
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)

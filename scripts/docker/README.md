@@ -88,6 +88,12 @@ sudo bash build_docker.sh -e `git rev-parse ${BRANCH}` -s -r -d ${STAGING_DIR}
 sudo bash build_docker.sh -e `git rev-parse ${BRANCH}` -s -u -d ${STAGING_DIR}
 ```
 
+Can be even simpler, for example if you have a local branch you want to build:
+
+```bash
+sudo bash build_docker.sh -e `git rev-parse HEAD` -u
+```
+
 #### Run GATK4 gradle tests in existing latest tagged docker image
 
 *Note that the unit tests are run during a build of the Dockerfile*

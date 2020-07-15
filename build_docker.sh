@@ -3,6 +3,11 @@
 # Have script stop if there is an error
 set -e
 
+# cleanup
+echo "Cleaning up..."
+rm -rf ./testJars
+rm -rf ./unzippedJar
+
 REPO=broadinstitute
 PROJECT=gatk
 REPO_PRJ=${REPO}/${PROJECT}
@@ -139,13 +144,13 @@ if [ -z "${IS_NOT_RUN_UNIT_TESTS}" ] ; then
 	fi
 
 	git lfs pull
-    chmod -R a+w ${STAGING_ABSOLUTE_PATH}/src/test/resources
+    chmod -R a+w ${STAGING_ABSOLUTE_PATH:-.}/src/test/resources
 
     cp build.gradle build.gradle.backup
     cp scripts/docker/dockertest.gradle .
 
-	echo docker run ${REMOVE_CONTAINER_STRING} -v  ${STAGING_ABSOLUTE_PATH}:/gatkCloneMountPoint -v  ${STAGING_ABSOLUTE_PATH}/testJars:/jars -t ${REPO_PRJ}:${GITHUB_TAG} bash /root/run_unit_tests.sh
-    docker run ${REMOVE_CONTAINER_STRING} -v  ${STAGING_ABSOLUTE_PATH}:/gatkCloneMountPoint -v  ${STAGING_ABSOLUTE_PATH}/testJars:/jars -t ${REPO_PRJ}:${GITHUB_TAG} bash /root/run_unit_tests.sh
+	echo docker run ${REMOVE_CONTAINER_STRING} -v  ${STAGING_ABSOLUTE_PATH:-.}:/gatkCloneMountPoint -v  ${STAGING_ABSOLUTE_PATH:-.}/testJars:/jars -t ${REPO_PRJ}:${GITHUB_TAG} bash /root/run_unit_tests.sh
+    docker run ${REMOVE_CONTAINER_STRING} -v  ${STAGING_ABSOLUTE_PATH:-.}:/gatkCloneMountPoint -v  ${STAGING_ABSOLUTE_PATH:-.}/testJars:/jars -t ${REPO_PRJ}:${GITHUB_TAG} bash /root/run_unit_tests.sh
 	echo " Unit tests passed..."
 	mv build.gradle.backup build.gradle
 fi
